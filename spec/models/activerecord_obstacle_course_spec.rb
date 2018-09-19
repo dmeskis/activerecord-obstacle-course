@@ -508,7 +508,7 @@ describe 'ActiveRecord Obstacle Course' do
     # Sal        |         5
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = User.joins(:orders).select('users.name, count(orders.id) as total_order_count').group('users.name')
+    custom_results = User.select('users.name, count(orders.id) as total_order_count').joins(:orders).group('users.name')
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(user_3.name)
@@ -531,7 +531,8 @@ describe 'ActiveRecord Obstacle Course' do
     # Dione      |         20
 
     # ------------------ ActiveRecord Solution ----------------------
- custom_results = User.joins(:order_items).select('users.name, count(order_items.id) as total_item_count').
+ custom_results = User.select('users.name, count(order_items.id) as total_item_count').
+                  joins(:order_items).
                   group('users.name').
                   order('users.name desc')
     # ---------------------------------------------------------------
